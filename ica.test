@@ -1,0 +1,13 @@
+n_samples=2000
+library("matlab", lib.loc="C:/Users/thinkingfly/Documents/R/win-library/3.1")
+time<-linspace(0,10,n_samples)
+s1<-sin(2*time)
+s2<-sign(sin(3*time))
+s<-cbind(s1,s2)
+noise<-reshape(as.array(rnorm( length(s1)*2 )),length(s1),2)
+s<-s+0.2*noise
+A <-matrix(c(1 ,1,0.5,2),ncol=2)
+X<-s%*%A
+ica<-fastICA(X, n.comp=2)
+S_<-ica$S
+A_<-ica$A
